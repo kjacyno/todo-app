@@ -11,8 +11,8 @@
 ```javascript
 //Ad.2 
 // funkcja do pobierania danych z określonego adresu URL, async zawsze zwraca Promise,
-//więc musimy go obsłużyć jak promise czyli then/catch bądź await w async function
-
+//więc musimy go obsłużyć jak promise czyli then/catch bądź await w async function 
+//funkcja zwraca response.json bez zapisywania do zmiennych, zebysmy mogli ją exportowac i uzywac w róznych modułach
 async function getAllTasks() {
     const response = await fetch('http://localhost:8081/tasks');
     return response.json()
@@ -46,3 +46,26 @@ useEffect(() => {
     }, [])
 
 ```
+
+## Dodawanie danych do aplikacji przez użytkownika
+1. UI, user interface, najlepiej używać znacznik form (wysyłanie enterm i wygodniejsze użytkowanie)
+````jsx
+
+<form>
+    <div>
+    <label htmlFor='title'>Title</label>
+    <input type='text' id='title' name='title'/>
+    </div>
+    <div>
+    <label htmlFor='desc'>Description</label>
+    <textarea id='desc' name='desc'/>
+    </div>
+</form>
+
+````
+2. Obsługa formularzy/inputów może być zrobiona na 3 podstawowe sposoby: 
+    - controlled inputs(potrzebny stan i funkcja, która po wyemitowaniu zdarzenia go aktualizuje)
+    - uncotrolled inputs(obsługujemy dane, dopiero jak użytkownik chce je wysłać)
+    - biblioteki -> Formik + Yup do walidacji
+   
+3. Wysłać dane na server, po odpowiedzi servera aktualizujemy stan
