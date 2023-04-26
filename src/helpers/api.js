@@ -14,4 +14,10 @@ export async function sendTaskData (data){
         })
     return response.json();
 }
+export    const deleteTaskAPI = async (id) => {
+    const response = await fetch(`http://localhost:3000/tasks/${id}`, {
+        method: "DELETE"
+    })
+    return response.json();
+}
 
