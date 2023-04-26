@@ -1,10 +1,10 @@
 export async function getAllTasks() {
-    const response = await fetch('http://localhost:8081/tasks');
+    const response = await fetch('http://localhost:3000/tasks');
     return response.json()
 }
 
 export async function sendTaskData (data){
-    const response = await fetch('http://localhost:8081/tasks',
+    const response = await fetch('http://localhost:3000/tasks',
         {
             headers: {
                 'Content-type': 'application/json'

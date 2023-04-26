@@ -3,13 +3,13 @@ import {useEffect, useState} from "react";
 import {getAllTasks, sendTaskData} from "./helpers/api.js";
 
 function App() {
-const [task, setTask] = useState([]);
+const [tasks, setTasks] = useState([]);
 const [title, setTitle] = useState('');
 const [description, setDescription] = useState('');
 
 useEffect(() => {
     getAllTasks()
-        .then((data) => {setTask(data)})
+        .then((data) => {setTasks(data)})
         .catch(console.error)
 }, []);
 
@@ -23,16 +23,17 @@ const result = await sendTaskData(
         addedDate: new Date()
     }
 );
+setTasks([...tasks, result])
 setTitle('');
-setDescription('');
-setTask([...task, result]);
+setDescription('')
 
 }
 
   return (
     <>
 <form onSubmit={handleSubmit}>
-    <div>
+
+        <div>
     <label htmlFor='title'>Title</label>
     <input
         value={title}
@@ -54,6 +55,19 @@ setTask([...task, result]);
     </div>
     <button type='submit'>Add task</button>
 </form>
+        <br/>
+        <section>
+            {tasks.map((task) => (
+<div key={task.id}>
+<b>{task.title}</b> - <span>{task.description}</span>
+    <button>Add operation</button>
+    <button>Finish</button>
+    <button>Delete</button>
+</div>
+            ))}
+        </section>
+
+
     </>
   )
 }

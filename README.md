@@ -67,5 +67,49 @@ useEffect(() => {
     - controlled inputs(potrzebny stan i funkcja, która po wyemitowaniu zdarzenia go aktualizuje)
     - uncotrolled inputs(obsługujemy dane, dopiero jak użytkownik chce je wysłać)
     - biblioteki -> Formik + Yup do walidacji
-   
+
 3. Wysłać dane na server, po odpowiedzi servera aktualizujemy stan
+```javascript
+    /// wysyłanie danych na form onSubmit w wersji async await oraz promise fetch/catch
+
+async function handleSubmit(event) {
+        event.preventDefault();
+        const result = await sendTaskData({
+            title, description, status: 'open', addedDate: new Date()
+        });
+
+        setTitle('');
+        setDescription('');
+        setTask([...task, result])
+
+    }
+
+function handleSubmitPromise(event) {
+   event.preventDefault();
+   const response = sendTaskData({
+      title, description, status: 'open', addedDate: new Date()
+   })
+
+   response.then((result) => {
+      setTitle('');
+      setDescription('');
+      setTask([...task, result])
+   })
+}
+```
+
+## Wyświetlanie danych w JSX
+
+```jsx
+//tablica -> const tasks = [{a:1, b:2, c3}, {a:23, b:14, c:43}]
+{tasks.map((task) => (
+    <p key={task.a}>{task.b}</p>
+        )
+)}
+// do wyświetlania danych - prawdopodobnie ze state(useState,this.state) używa sie map (metoda tablicy),
+//która pryjume funkcje dla każdego elementu tablicy ją wykonuje, to co zwróci będzie elemenetem, który
+//się wyświetli, więc zazwyczaj zwraca JSX
+//należy pamiętać o props key, bo react używa go do wyliczenia różnicy, którą musi zaaplikować pomiędzy virtual dom i real dom
+//ket musi być unikalne i nie zmienialne, ale może być dowolnym prostym typem danych.
+
+```
