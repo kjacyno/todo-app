@@ -14,11 +14,11 @@ function AddOperation({taskId, setOperationId, setTasks}) {
                 taskId
             }, 'operations');
 
-            await setTasks((prev) => prev.map((task) => {
+            setTasks((prev) => prev.map((task) => {
                 if (task.id !== taskId) return task;
+                // const operations = task.operations ?? [] TO ALBO DODANIE KEY OPERATIONS DO TASKA
                 task.operations = [
-                    ...task.operations
-                    , data]
+                    ...task.operations, data]
 
                 return task
 

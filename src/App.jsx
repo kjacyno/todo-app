@@ -2,12 +2,14 @@ import './App.css'
 import {useEffect, useState} from "react";
 import {deleteDataAPI, getDataAPI, sendDataAPI} from "./helpers/api.js";
 import AddOperation from "./components/AddOperation.jsx";
+import AddTimeSpent from "./components/AddTimeSpent.jsx";
 
 function App() {
     const [tasks, setTasks] = useState([]);
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
-    const [operationId, setOperationId] = useState(null)
+    const [operationId, setOperationId] = useState(null);
+    const [timeSpentId, setTimeSpentId] = useState(null);
 
     useEffect(() => {
         const data = Promise.all([getDataAPI('tasks'), getDataAPI('operations')])
@@ -24,24 +26,26 @@ function App() {
 
     async function handleSubmit(event) {
         event.preventDefault();
-        const result = await sendDataAPI(
-            {
-                title,
-                description,
-                status: 'open',
-                addedDate: new Date(),
-                operations: []
-            }, 'tasks'
-        );
-        setTasks([...tasks, result])
-        setTitle('');
-        setDescription('')
+        if (title.trim() !== '') {
 
+            const result = await sendDataAPI(
+                {
+                    title,
+                    description,
+                    status: 'open',
+                    addedDate: new Date(),
+                    operations: []
+                }, 'tasks'
+            );
+            setTasks([...tasks, result])
+            setTitle('');
+            setDescription('')
+        }
     }
 
     async function handleDeleteTask(event) {
         const id = +event.target.dataset.id
-        await deleteDataAPI(id,'tasks');
+        await deleteDataAPI(id, 'tasks');
         setTasks(tasks.filter((task) => task.id !== id));
     }
 
@@ -58,22 +62,30 @@ function App() {
     //             return newTasks;
     //         });
     // }
-    async function handleDeleteOp(event) {
-        const id = +event.target.dataset.id;
-        if (!isNaN(id)) {
-            const updatedTasks = tasks.map((task) => {
-                if (task.operations.some((op) => op.id === id)) {
-                    return {
-                        ...task,
-                        operations: task.operations.filter((op) => op.id !== id),
-                    };
-                }
-                return task;
-            });
-            await deleteDataAPI(id, 'operations');
-            setTasks(updatedTasks);
-        }
+    async function handleDeleteOp(id) {
+        //trzeba było przekazać id w deklaracji funkcji w button zeby nie miało
+        //znaczenia co klikamy dokładnie (ikonka czy tekst) zeby zawsze sie dobrze przekazywało id
+        //i zeby zniknał błąd NaN, który trafiał czasem na ikonkę jako event.target
+        await deleteDataAPI(id, 'operations');
+        setTasks(tasks.map((task) => {
+            return {
+                ...task,
+                operations: task.operations.filter((operation) => operation.id !== id)
+            }
+        }))
+        // if (!isNaN(id)) {
+        //     const updatedTasks = tasks.map((task) => {
+        //         if (task.operations.some((op) => op.id === id)) {
+        //             return {
+        //                 ...task,
+        //                 operations: task.operations.filter((op) => op.id !== id),
+        //             };
+        //         }
+        //         return task;
+        //     });
+        //     setTasks(updatedTasks);
     }
+
     return (
         <>
             <form onSubmit={handleSubmit}>
@@ -115,13 +127,25 @@ function App() {
 
                         <button>Finish</button>
                         <button onClick={handleDeleteTask} data-id={task.id}>Delete</button>
-                        {task.operations?.length > 0 ? (task.operations.map((operation) => (
+                        {task.operations && (task.operations.map((operation) => (
                             <div key={operation.id}>
                                 <span>{operation.description}</span> ----------- Time spent:
-                                <span> {operation.timeSpent}</span>
-                                <button onClick={handleDeleteOp} data-id={operation.id}><i className="fa-solid fa-trash"></i></button>
+                                <span> {~~(operation.timeSpent / 60)}h {operation.timeSpent % 60}m</span>
+                                {operation.id === timeSpentId ? (
+                                    <AddTimeSpent
+                                        setTasks={setTasks}
+                                        operationId={operation.id}
+                                        timeSpent = {operation.timeSpent}
+                                        setTimeSpentId = {setTimeSpentId}
+                                    />
+                                ) : (
+                                    <button onClick={() => setTimeSpentId(operation.id)}>Add time</button>
+                                )
+                                }
+                                <button onClick={() => handleDeleteOp(operation.id)}><i
+                                    className="fa-solid fa-trash"></i></button>
                             </div>
-                        ))) : ''}
+                        )))}
                     </div>
                 ))}
             </section>

@@ -1,28 +1,12 @@
 {
   "tasks": [
     {
-      "title": "dvxdv",
-      "description": "dvxvdx",
+      "title": "dwadaw",
+      "description": "dawdawd",
       "status": "open",
-      "addedDate": "2023-04-27T00:40:15.671Z",
+      "addedDate": "2023-04-27T08:37:21.946Z",
       "operations": [],
       "id": 1
-    },
-    {
-      "title": "vxdvdx",
-      "description": "vdxvdvx",
-      "status": "open",
-      "addedDate": "2023-04-27T00:40:20.089Z",
-      "operations": [],
-      "id": 2
-    },
-    {
-      "title": "vdxvdx",
-      "description": "vdxvdx",
-      "status": "open",
-      "addedDate": "2023-04-27T00:40:30.937Z",
-      "operations": [],
-      "id": 3
     }
   ],
   "operations": [
@@ -31,6 +15,13 @@
       "timeSpent": 0,
       "addedDate": "2023-04-26T22:57:09.605Z",
       "id": 3
+    },
+    {
+      "description": "ghfhfg",
+      "timeSpent": 27,
+      "addedDate": "2023-04-27T08:57:12.570Z",
+      "taskId": 1,
+      "id": 4
     }
   ]
 }
