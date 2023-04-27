@@ -13,7 +13,7 @@
 // funkcja do pobierania danych z określonego adresu URL, async zawsze zwraca Promise,
 //więc musimy go obsłużyć jak promise czyli then/catch bądź await w async function 
 //funkcja zwraca response.json bez zapisywania do zmiennych, zebysmy mogli ją exportowac i uzywac w róznych modułach
-async function getAllTasks() {
+async function getDataAPI() {
     const response = await fetch('http://localhost:8081/tasks');
     return response.json()
 }
@@ -40,7 +40,7 @@ const [task, setTask] = useState([])
 //asynchroniczna (Promise based) to obsługujemy ją przez then i catch.
 import {useEffect} from 'react';
 useEffect(() => {
-    getAllTasks()
+    getDataAPI()
         .then((data) => setTask(data))
         .cattch(console.error)
     }, [])
@@ -69,24 +69,25 @@ useEffect(() => {
     - biblioteki -> Formik + Yup do walidacji
 
 3. Wysłać dane na server, po odpowiedzi servera aktualizujemy stan
+
 ```javascript
     /// wysyłanie danych na form onSubmit w wersji async await oraz promise fetch/catch
 
 async function handleSubmit(event) {
-        event.preventDefault();
-        const result = await sendTaskData({
-            title, description, status: 'open', addedDate: new Date()
-        });
+   event.preventDefault();
+   const result = await sendDataAPI({
+      title, description, status: 'open', addedDate: new Date()
+   });
 
-        setTitle('');
-        setDescription('');
-        setTask([...task, result])
+   setTitle('');
+   setDescription('');
+   setTask([...task, result])
 
-    }
+}
 
 function handleSubmitPromise(event) {
    event.preventDefault();
-   const response = sendTaskData({
+   const response = sendDataAPI({
       title, description, status: 'open', addedDate: new Date()
    })
 
@@ -112,4 +113,35 @@ function handleSubmitPromise(event) {
 //należy pamiętać o props key, bo react używa go do wyliczenia różnicy, którą musi zaaplikować pomiędzy virtual dom i real dom
 //ket musi być unikalne i nie zmienialne, ale może być dowolnym prostym typem danych.
 
+```
+
+## Pobieranie i scalanie danych z różnych endpointów
+
+```javascript
+ useEffect(() => {
+     //metoda statyczna[nie trzeba pisać obiektu, np new Promise] Promise.all() przyjmuje tablicę Promises,
+   // następnie obsługuje je jednocześnie, czekając aż ostatni się skończy.
+   // metoda all zwraca Promise, więc trzeba ją obsłużyć odpowiednio: await lub then.
+   const data = Promise.all([getDataAPI('tasks'), getDataAPI('operations')])
+   //w useEffect nie da się używać async await
+
+   data
+           .then((results) => {
+               //ta funkcja wykonuje się, kiedy wszsytkie promisy zostały skończone, result posiada w sobię tablicę,
+              //w której są wyniki wszystkich promise z promise all, w tej samej kolejności jak zostały dodane
+            //dlatego poniżej można użtć array destructuring:       
+               const [taskData, operationData] = results;
+               
+               //aby połączyć 2 tablice z danymi można przemapować jedną z nich, dodając elementy drugiej do elementów pierwszej
+      const tasks = taskData.map((task) => ({
+         //dla każdego elementu tablicy taskData tworzę nowy obiekt, gdzie za pomocą spread operator wstawiam wszystkie elementy
+         ...task,
+         //dokładam do nowego obiektu key operations - a jego wartość wylicza filter wyników z drugiej tablicy
+         operations: operationData.filter((operation) => operation.taskId === task.id)
+      }))
+              //aktualizuje stan tasks
+      setTasks(tasks);
+   })
+           .catch(console.error)
+}, []);
 ```
