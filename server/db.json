@@ -1,5 +1,30 @@
 {
-  "tasks": [],
+  "tasks": [
+    {
+      "title": "dvxdv",
+      "description": "dvxvdx",
+      "status": "open",
+      "addedDate": "2023-04-27T00:40:15.671Z",
+      "operations": [],
+      "id": 1
+    },
+    {
+      "title": "vxdvdx",
+      "description": "vdxvdvx",
+      "status": "open",
+      "addedDate": "2023-04-27T00:40:20.089Z",
+      "operations": [],
+      "id": 2
+    },
+    {
+      "title": "vdxvdx",
+      "description": "vdxvdx",
+      "status": "open",
+      "addedDate": "2023-04-27T00:40:30.937Z",
+      "operations": [],
+      "id": 3
+    }
+  ],
   "operations": [
     {
       "description": "hmm",

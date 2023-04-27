@@ -1,6 +1,6 @@
 import './App.css'
 import {useEffect, useState} from "react";
-import {deleteTaskAPI, getDataAPI, sendDataAPI} from "./helpers/api.js";
+import {deleteDataAPI, getDataAPI, sendDataAPI} from "./helpers/api.js";
 import AddOperation from "./components/AddOperation.jsx";
 
 function App() {
@@ -41,10 +41,39 @@ function App() {
 
     async function handleDeleteTask(event) {
         const id = +event.target.dataset.id
-        await deleteTaskAPI(id);
+        await deleteDataAPI(id,'tasks');
         setTasks(tasks.filter((task) => task.id !== id));
     }
 
+    // async function handleDeleteOp(event) {
+    //     const id = +event.target.dataset.id;
+    //         await deleteDataAPI(id, 'operations');
+    //         setTasks(prevTasks => {
+    //             const newTasks = [...prevTasks];
+    //             for (const task of newTasks) {
+    //                 if (task.operations) {
+    //                     task.operations = task.operations.filter(op => op.id !== id);
+    //                 }
+    //             }
+    //             return newTasks;
+    //         });
+    // }
+    async function handleDeleteOp(event) {
+        const id = +event.target.dataset.id;
+        if (!isNaN(id)) {
+            const updatedTasks = tasks.map((task) => {
+                if (task.operations.some((op) => op.id === id)) {
+                    return {
+                        ...task,
+                        operations: task.operations.filter((op) => op.id !== id),
+                    };
+                }
+                return task;
+            });
+            await deleteDataAPI(id, 'operations');
+            setTasks(updatedTasks);
+        }
+    }
     return (
         <>
             <form onSubmit={handleSubmit}>
@@ -90,6 +119,7 @@ function App() {
                             <div key={operation.id}>
                                 <span>{operation.description}</span> ----------- Time spent:
                                 <span> {operation.timeSpent}</span>
+                                <button onClick={handleDeleteOp} data-id={operation.id}><i className="fa-solid fa-trash"></i></button>
                             </div>
                         ))) : ''}
                     </div>
