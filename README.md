@@ -8,7 +8,7 @@ Set the time spent on each operation.
 Delete and edit tasks.
 Sort tasks using filters (All, Active, Completed).
 
-##Technologies Used
+## Technologies Used
 
 React: A JavaScript library for building user interfaces.
 JavaScript: A programming language used for client-side scripting.
