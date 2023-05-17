@@ -1,3 +1,23 @@
+# Todo App
+This is a Todo App built using React, JavaScript, and Vite. It allows you to add tasks to your to-do list, perform operations on each task, set the time spent on these operations, delete and edit tasks, and sort them using filters.
+
+## Features
+Add tasks to your to-do list.
+Perform operations on each task.
+Set the time spent on each operation.
+Delete and edit tasks.
+Sort tasks using filters (All, Active, Completed).
+
+## Technologies Used
+
+React: A JavaScript library for building user interfaces.
+JavaScript: A programming language used for client-side scripting.
+Vite: A build tool that provides a fast and optimized development environment for web applications.
+Firebase: A platform that offers various services for building and managing web and mobile applications.
+
+visit https://todo-d1651.web.app/
+
+
 # Notes
 
 ## Pobieranie danych - podczas montowania komponentu
