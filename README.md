@@ -41,7 +41,7 @@ import { useEffect } from "react";
 useEffect(() => {
     getDataAPI()
         .then((data) => setTask(data))
-        .cattch(console.error);
+        .catch(console.error);
 }, []);
 ```
 
