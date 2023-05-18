@@ -1,6 +1,6 @@
 # Todo App
 This is a Todo App built using React, JavaScript, and Vite. It allows you to add tasks to your to-do list, perform operations on each task, set the time spent on these operations, delete and edit tasks, and sort them using filters.
-
+* part of Coders Lab bootcamp workshop - includes notes and comments *
 ## Features
 Add tasks to your to-do list.
 Perform operations on each task.
@@ -15,6 +15,7 @@ JavaScript: A programming language used for client-side scripting.
 Vite: A build tool that provides a fast and optimized development environment for web applications.
 Firebase: A platform that offers various services for building and managing web and mobile applications.
 Material UI
+JSON server
 
 visit https://todo-d1651.web.app/
 

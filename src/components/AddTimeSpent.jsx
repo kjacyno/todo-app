@@ -1,6 +1,7 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
 import { updateDataAPI } from "../helpers/api.js";
+import {Button, TextField} from "@mui/material";
 
 function AddTimeSpent({ operationId, timeSpent, setTasks, setTimeSpentId }) {
     const [value, setValue] = useState(0);
@@ -34,14 +35,22 @@ function AddTimeSpent({ operationId, timeSpent, setTasks, setTimeSpentId }) {
     return (
         <>
             {value < 0 && <b>value should be higher then 0</b>}
-            <input
+            <TextField
+                className='add-time'
+                id="outlined-basic"
+                label="Add time spent"
+                variant="outlined"
                 type="number"
                 value={value}
                 onChange={(e) => setValue(+e.target.value)}
                 min="0"
             />
-            <button onClick={handleUpdateOperation}>Add</button>
-            <button onClick={() => setTimeSpentId(null)}>Cancel</button>
+            <Button variant="outlined" onClick={handleUpdateOperation}>
+                Add
+            </Button>
+            <Button variant="outlined" onClick={() => setTimeSpentId(null)}>
+                Cancel
+            </Button>
         </>
     );
 }

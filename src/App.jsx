@@ -8,6 +8,15 @@ import {
 } from "./helpers/api.js";
 import AddOperation from "./components/AddOperation.jsx";
 import AddTimeSpent from "./components/AddTimeSpent.jsx";
+import {
+    Button,
+    Container,
+    CssBaseline,
+    TextField,
+    Box,
+    List,
+    ListItem, ListItemText
+} from "@mui/material";
 
 function App() {
     const [tasks, setTasks] = useState([]);
@@ -126,105 +135,146 @@ function App() {
 
     return (
         <>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label htmlFor="title">Title</label>
-                    <input
-                        value={title}
-                        type="text"
-                        id="title"
-                        name="title"
-                        onChange={(event) => setTitle(event.target.value)}
-                    />
-                </div>
-                <div>
-                    <label htmlFor="desc">Description</label>
-                    <textarea
-                        value={description}
-                        id="desc"
-                        name="desc"
-                        onChange={(event) => setDescription(event.target.value)}
-                    />
-                </div>
-                <button type="submit">Add task</button>
-            </form>
-            <br />
-            <section>
-                {tasks.map((task) => (
-                    <div key={task.id}>
-                        <b>{task.title}</b> - <span>{task.description}</span>
-                        {operationId === task.id ? (
-                            <AddOperation
-                                setOperationId={setOperationId}
-                                taskId={task.id}
-                                setTasks={setTasks}
-                            />
-                        ) : (
-                            <>
+            <CssBaseline />
+            <Container fixed>
+                <form onSubmit={handleSubmit}>
+                    <Box>
+                        <TextField
+                            id="standard-basic"
+                            label="Title"
+                            variant="standard"
+                            value={title}
+                            type="text"
+                            name="title"
+                            onChange={(event) => setTitle(event.target.value)}
+                        />
+                    </Box>
+                    <Box>
+                        <TextField
+                            id="standard-basic"
+                            label="Description"
+                            variant="standard"
+                            value={description}
+                            name="desc"
+                            onChange={(event) =>
+                                setDescription(event.target.value)
+                            }
+                        />
+                    </Box>
+                    <Button variant="outlined" type="submit">
+                        Add task
+                    </Button>
+                </form>
+                <br />
+                <section className="tasks-section">
+                    <List>
+                        {tasks.map((task) => (
+                                                            <ListItem className="task" key={task.id}>
+                                    <div className='task-main'>
+                                    <ListItemText className='listItemText'
+                                        primary={task.title}
+                                        secondary={task.description}
+                                    />
+                                {operationId === task.id ? (
+                                    <AddOperation
+                                        setOperationId={setOperationId}
+                                        taskId={task.id}
+                                        setTasks={setTasks}
+                                    />
+                                ) : (
+                                    <>
+                                        {task.status === "open" && (
+                                            <Button
+                                                variant="text"
+                                                onClick={() =>
+                                                    setOperationId(task.id)
+                                                }
+                                            >
+                                                Add operation
+                                            </Button>
+                                        )}
+
                                 {task.status === "open" && (
-                                    <button
-                                        onClick={() => setOperationId(task.id)}
+                                    <Button
+                                        variant="text"
+                                        onClick={handleFinishTask(task.id)}
                                     >
-                                        Add operation
-                                    </button>
+                                        Finish
+                                    </Button>
                                 )}
-                            </>
-                        )}
-                        {task.status === "open" && (
-                            <button onClick={handleFinishTask(task.id)}>
-                                Finish
-                            </button>
-                        )}
-                        <button onClick={handleDeleteTask} data-id={task.id}>
-                            Delete
-                        </button>
-                        {task.operations &&
-                            task.operations.map((operation) => (
-                                <div key={operation.id}>
-                                    <span>{operation.description}</span>{" "}
-                                    ----------- Time spent:
-                                    {operation.timeSpent > 0 && (
-                                        <b>
-                                            {~~(operation.timeSpent / 60)}h{" "}
-                                            {operation.timeSpent % 60}m
-                                        </b>
-                                    )}
-                                    {operation.id === timeSpentId ? (
-                                        <AddTimeSpent
-                                            setTasks={setTasks}
-                                            operationId={operation.id}
-                                            timeSpent={operation.timeSpent}
-                                            setTimeSpentId={setTimeSpentId}
-                                        />
-                                    ) : (
-                                        <>
+                                <Button
+                                    variant="text"
+                                    onClick={handleDeleteTask}
+                                    data-id={task.id}
+                                >
+                                    Delete
+                                </Button>
+                                    </>
+                                )}
+                                    </div>
+                                {task.operations &&
+                                    task.operations.map((operation) => (
+                                        <div className='operation' key={operation.id}>
+                                            <div className='operation-description'>{operation.description}</div>{" "}
+                                            <div className='time-spent'>Time spent:
+                                            {operation.timeSpent > 0 && (
+                                                <b>
+                                                    {
+                                                        ~~(
+                                                            operation.timeSpent /
+                                                            60
+                                                        )
+                                                    }
+                                                    h {operation.timeSpent % 60}
+                                                    m
+                                                </b>
+                                            )}</div>
+                                            {operation.id === timeSpentId ? (
+                                                <AddTimeSpent
+                                                    setTasks={setTasks}
+                                                    operationId={operation.id}
+                                                    timeSpent={
+                                                        operation.timeSpent
+                                                    }
+                                                    setTimeSpentId={
+                                                        setTimeSpentId
+                                                    }
+                                                />
+                                            ) : (
+                                                <>
+                                                    {task.status === "open" && (
+                                                        <Button
+                                                            variant="outlined"
+                                                            onClick={() =>
+                                                                setTimeSpentId(
+                                                                    operation.id
+                                                                )
+                                                            }
+                                                        >
+                                                            Add time
+                                                        </Button>
+                                                    )}
+                                                </>
+                                            )}
                                             {task.status === "open" && (
-                                                <button
+                                                <Button
+                                                    variant="outlined"
                                                     onClick={() =>
-                                                        setTimeSpentId(
+                                                        handleDeleteOp(
                                                             operation.id
                                                         )
                                                     }
                                                 >
-                                                    Add time
-                                                </button>
+                                                    <i className="fa-solid fa-trash"></i>
+                                                </Button>
                                             )}
-                                        </>
-                                    )}
-                                    {task.status === "open" && (
-                                        <button
-                                            onClick={() =>
-                                                handleDeleteOp(operation.id)
-                                            }
-                                        >
-                                            <i className="fa-solid fa-trash"></i>
-                                        </button>
-                                    )}
-                                </div>
-                            ))}
-                    </div>
-                ))}
-            </section>
+                                        </div>
+                                    ))}
+                                </ListItem>
+                        ))}
+                    </List>
+                </section>
+            </Container>
         </>
     );
 }

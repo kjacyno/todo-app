@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { sendDataAPI } from "../helpers/api.js";
 import PropTypes from "prop-types";
+import { Button, TextField } from "@mui/material";
+
 
 function AddOperation({ taskId, setOperationId, setTasks }) {
     const [value, setValue] = useState("");
@@ -31,16 +33,22 @@ function AddOperation({ taskId, setOperationId, setTasks }) {
     }
 
     return (
-        <>
-            <input
+        <div className='add-operation'>
+            <TextField
+                id="standard-basic"
+                label="Operation description"
+                variant="standard"
                 type="text"
                 value={value}
                 onChange={(event) => setValue(event.target.value)}
-                placeholder="Operation description"
             />
-            <button onClick={handleAddOperation}>Confirm</button>
-            <button onClick={() => setOperationId(null)}>Cancel</button>
-        </>
+            <Button variant="outlined" onClick={handleAddOperation}>
+                Confirm
+            </Button>
+            <Button variant="outlined" onClick={() => setOperationId(null)}>
+                Cancel
+            </Button>
+        </div>
     );
 }
 
