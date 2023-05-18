@@ -1,11 +1,66 @@
 {
-  "tasks": [],
+  "tasks": [
+    {
+      "title": "sdaaw",
+      "description": "dwadwa",
+      "status": "closed",
+      "addedDate": "2023-05-18T15:18:26.684Z",
+      "operations": [],
+      "id": 1
+    },
+    {
+      "title": "dwadawd",
+      "description": "dwadawdaw",
+      "status": "closed",
+      "addedDate": "2023-05-18T15:20:24.311Z",
+      "operations": [],
+      "id": 2
+    },
+    {
+      "title": "vghvhg",
+      "description": "OJOJOJ",
+      "status": "closed",
+      "addedDate": "2023-05-18T15:20:46.012Z",
+      "operations": [],
+      "id": 3
+    },
+    {
+      "title": "R4R4",
+      "description": "R4WR4W",
+      "status": "closed",
+      "addedDate": "2023-05-18T15:21:30.362Z",
+      "operations": [],
+      "id": 5
+    },
+    {
+      "title": "dwadaw",
+      "description": "dwadwadwa",
+      "status": "closed",
+      "addedDate": "2023-05-18T16:03:27.729Z",
+      "operations": [],
+      "id": 6
+    }
+  ],
   "operations": [
     {
       "description": "hmm",
       "timeSpent": 0,
       "addedDate": "2023-04-26T22:57:09.605Z",
       "id": 3
+    },
+    {
+      "description": "dawdada",
+      "timeSpent": 0,
+      "addedDate": "2023-05-18T15:18:29.885Z",
+      "taskId": 1,
+      "id": 4
+    },
+    {
+      "description": "bbbbbb",
+      "timeSpent": 0,
+      "addedDate": "2023-05-18T16:12:38.417Z",
+      "taskId": 6,
+      "id": 10
     }
   ]
 }

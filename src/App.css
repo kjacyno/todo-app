@@ -5,6 +5,7 @@
     padding: 2rem;
     text-align: center;
     box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
 
 }
 form {
@@ -65,4 +66,22 @@ margin-bottom: 10px;
 }
 .time-spent b {
     margin-left: 8px;
+}
+.status {
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    border: 1px solid darkgray;
+    background: green;
+    display: inline-block;
+    margin-right: 10px;
+
+}
+
+.active {
+    background-color: orangered;
+}
+
+.status + span {
+    text-decoration: line-through;
 }

@@ -4,7 +4,7 @@ import { updateDataAPI } from "../helpers/api.js";
 import {Button, TextField} from "@mui/material";
 
 function AddTimeSpent({ operationId, timeSpent, setTasks, setTimeSpentId }) {
-    const [value, setValue] = useState(0);
+    const [value, setValue] = useState(timeSpent);
 
     async function handleUpdateOperation() {
         if (value > 0) {
@@ -57,7 +57,7 @@ function AddTimeSpent({ operationId, timeSpent, setTasks, setTimeSpentId }) {
 
 AddTimeSpent.propTypes = {
     operationId: PropTypes.number,
-    timeSpent: PropTypes.number,
+    timeSpent: PropTypes.any,
     setTasks: PropTypes.func,
     setTimeSpentId: PropTypes.func,
 };
